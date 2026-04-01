@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civilizations Compared — West & China Through the Ages</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Noto+Serif+SC:wght@300;400;600;700&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4ede2;--bg2:#ece3d4;--bg3:#e2d8c6;
+  --ink:#2a2420;--ink2:#4a4038;--dim:#8a7e70;--faint:#c4b8a6;
+  --west:#2c4a7c;--west-bg:rgba(44,74,124,.06);--west-border:rgba(44,74,124,.15);
+  --east:#8b2c2c;--east-bg:rgba(139,44,44,.05);--east-border:rgba(139,44,44,.14);
+  --gold:#b8922f;--gold-bg:rgba(184,146,47,.08);--gold-dim:#9a7a28;
+  --rule:rgba(42,36,32,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:'Crimson Pro',serif;font-weight:300;line-height:1.8;
+  overflow-x:hidden;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.02;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:300px;
+}
+.cn{font-family:'Noto Serif SC',serif;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+h1,h2,h3{font-family:'Crimson Pro',serif;}
+a{color:var(--gold-dim);text-decoration:none;}
+
+/* ─ Reveal ─ */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+.rv.vis{opacity:1;transform:translateY(0);}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.22s}.rv.d3{transition-delay:.36s}
+
+/* ═══ NAV ═══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  background:rgba(244,237,226,.88);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);height:48px;
+  display:flex;align-items:center;padding:0 28px;gap:20px;
+  overflow-x:auto;white-space:nowrap;
+  -webkit-overflow-scrolling:touch;
+}
+nav::-webkit-scrollbar{display:none;}
+.nav-home{
+  font-weight:700;font-size:.8rem;color:var(--ink);
+  letter-spacing:.06em;flex-shrink:0;margin-right:8px;
+  border-right:1px solid var(--rule);padding-right:18px;
+}
+.nav-era{
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);font-family:'IBM Plex Mono',monospace;
+  cursor:pointer;transition:color .2s;flex-shrink:0;padding:4px 0;
+  font-weight:400;
+}
+.nav-era:hover,.nav-era.active{color:var(--ink);}
+.nav-era.active{border-bottom:2px solid var(--gold);}
+
+/* ═══ HERO ═══ */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding:120px 40px 80px;position:relative;
+}
+.hero-orn{
+  display:flex;align-items:center;gap:16px;margin-bottom:32px;
+  color:var(--faint);font-size:.8rem;letter-spacing:.3em;
+}
+.hero-orn span{display:block;width:50px;height:1px;background:var(--faint);}
+h1.hero-t{
+  font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:300;
+  line-height:1.2;letter-spacing:-.02em;max-width:800px;
+}
+.hero-cn{
+  font-family:'Noto Serif SC',serif;font-weight:300;
+  font-size:clamp(1.1rem,2.2vw,1.6rem);color:var(--dim);margin-top:12px;
+}
+.hero-desc{
+  max-width:560px;margin-top:28px;font-size:1.05rem;color:var(--ink2);
+}
+.hero-legend{
+  display:flex;gap:28px;margin-top:36px;font-size:.8rem;
+}
+.legend-item{display:flex;align-items:center;gap:8px;}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+.legend-dot.w{background:var(--west);}
+.legend-dot.e{background:var(--east);}
+.legend-dot.g{background:var(--gold);}
+
+/* ═══ ERA SECTION ═══ */
+.era{
+  max-width:1100px;margin:0 auto;
+  padding:80px 40px;
+  border-top:1px solid var(--rule);
+}
+@media(max-width:700px){.era{padding:50px 20px;}}
+.era-label{
+  font-family:'IBM Plex Mono',monospace;font-size:.6rem;
+  letter-spacing:.25em;text-transform:uppercase;color:var(--gold-dim);
+  margin-bottom:.8rem;
+}
+.era h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:400;line-height:1.25;margin-bottom:.3rem;}
+.era .h2cn{font-family:'Noto Serif SC',serif;font-weight:300;font-size:clamp(.95rem,1.8vw,1.2rem);color:var(--dim);margin-bottom:2rem;}
+
+/* ═══ PAIR TABLE ═══ */
+.pairs{width:100%;border-collapse:collapse;}
+.pairs th{
+  font-family:'IBM Plex Mono',monospace;font-size:.58rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  padding:10px 14px;text-align:left;
+  border-bottom:2px solid var(--rule);color:var(--dim);
+  position:sticky;top:48px;background:var(--bg);z-index:10;
+}
+.pairs th:nth-child(1){width:28%;}
+.pairs th:nth-child(2){color:var(--west);}
+.pairs th:nth-child(3){color:var(--east);}
+.pairs th:nth-child(4){width:22%;}
+
+.pairs td{
+  padding:16px 14px;border-bottom:1px solid var(--rule);
+  vertical-align:top;font-size:.95rem;
+}
+.pairs tr{transition:background .2s;}
+.pairs tr:hover td{background:var(--gold-bg);}
+
+.fig-name{font-weight:600;display:block;line-height:1.4;}
+.fig-cn{font-family:'Noto Serif SC',serif;font-size:.82rem;color:var(--dim);display:block;margin-top:2px;}
+.fig-desc{font-size:.8rem;color:var(--ink2);margin-top:4px;line-height:1.6;}
+
+.concept-badge{
+  display:inline-block;padding:4px 12px;
+  border-radius:5px;font-size:.72rem;font-weight:600;
+  background:var(--gold-bg);color:var(--gold-dim);
+  border:1px solid rgba(184,146,47,.15);
+  letter-spacing:.03em;
+}
+.concept-cn{
+  font-family:'Noto Serif SC',serif;
+  font-size:.72rem;color:var(--dim);display:block;margin-top:4px;
+}
+
+.col-w{color:var(--west);}
+.col-e{color:var(--east);}
+
+/* ─ West/East cell accent ─ */
+.pairs td:nth-child(2){border-left:3px solid var(--west-border);}
+.pairs td:nth-child(3){border-left:3px solid var(--east-border);}
+
+/* ═══ ERA VISUAL DIVIDER ═══ */
+.era-div{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  padding:10px 0;color:var(--faint);
+  max-width:1100px;margin:0 auto;
+}
+.era-div span{width:30px;height:1px;background:currentColor;}
+
+/* ═══ FOOTER ═══ */
+footer{
+  text-align:center;padding:60px 40px;
+  border-top:1px solid var(--rule);
+  max-width:1100px;margin:0 auto;
+}
+footer p{font-size:.78rem;color:var(--dim);}
+
+/* ═══ Responsive ═══ */
+@media(max-width:700px){
+  .pairs{font-size:.82rem;}
+  .pairs th,.pairs td{padding:10px 8px;}
+  .fig-desc{display:none;}
+  .hero-legend{flex-direction:column;gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="mainNav">
+  <div class="nav-home">Civilizations</div>
+  <a class="nav-era" href="#era-legend">Legend</a>
+  <a class="nav-era" href="#era-kingdom">Kingdoms</a>
+  <a class="nav-era" href="#era-axial">Axial</a>
+  <a class="nav-era" href="#era-empire1">1st Empire</a>
+  <a class="nav-era" href="#era-empire2">2nd Empire</a>
+  <a class="nav-era" href="#era-empire3">3rd Empire</a>
+  <a class="nav-era" href="#era-industrial">Industrial</a>
+  <a class="nav-era" href="#era-modern">Modern</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-orn rv"><span></span>&loz;<span></span></div>
+  <h1 class="hero-t rv d1">Civilizations Compared</h1>
+  <div class="hero-cn rv d2">中西方历史人物对比</div>
+  <p class="hero-desc rv d2">
+    From the legendary ancestors to the modern era &mdash; a panoramic pairing of the great figures
+    who shaped Western and Chinese civilization across ten parallel epochs.
+  </p>
+  <p class="hero-desc rv d3 cn" style="font-size:.9rem;color:var(--dim);margin-top:.8rem;">
+    从传说时代到当代——横跨十个平行纪元，全景式对比塑造中西文明的伟大人物。
+  </p>
+  <div class="hero-legend rv d3">
+    <div class="legend-item"><div class="legend-dot w"></div> West 西方</div>
+    <div class="legend-item"><div class="legend-dot e"></div> China 中国</div>
+    <div class="legend-item"><div class="legend-dot g"></div> Concept 概念</div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 1: LEGENDARY AGE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>I<span></span></div>
+<div class="era rv" id="era-legend" data-nav="Legend">
+  <div class="era-label">Era I &mdash; ~3000 BC and before</div>
+  <h2>The Legendary Age</h2>
+  <div class="h2cn">传说时代</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">Cultural Ancestor</span><span class="concept-cn">人文始祖</span></td>
+        <td><span class="fig-name col-w">Abraham</span><span class="fig-cn">亚伯拉罕</span><span class="fig-desc">Patriarch of the Abrahamic faiths &mdash; Judaism, Christianity, and Islam trace their origins to his covenant with God.</span></td>
+        <td><span class="fig-name col-e">Yellow Emperor 黄帝</span><span class="fig-cn">Huángdì</span><span class="fig-desc">Mythical ancestor of all Chinese people, credited with inventing writing, medicine, and the calendar.</span></td>
+        <td><span class="concept-badge">Progenitor of Civilization</span><span class="concept-cn">文明奠基者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Survival Founders</span><span class="concept-cn">生存奠基</span></td>
+        <td><span class="fig-name col-w">Moses</span><span class="fig-cn">摩西</span><span class="fig-desc">Led the Israelites out of Egypt, received the Ten Commandments &mdash; the foundation of Western moral law.</span></td>
+        <td><span class="fig-name col-e">Yu the Great 大禹</span><span class="fig-cn">Dà Yǔ</span><span class="fig-desc">Tamed the Great Flood through years of tireless labor, founding the Xia Dynasty &mdash; the first dynasty in Chinese tradition.</span></td>
+        <td><span class="concept-badge">Founders of Survival</span><span class="concept-cn">生存基础缔造者</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 2: AGE OF KINGDOMS -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>II<span></span></div>
+<div class="era rv" id="era-kingdom" data-nav="Kingdoms">
+  <div class="era-label">Era II &mdash; ~2000 BC &ndash; 700 BC</div>
+  <h2>Age of Kingdoms</h2>
+  <div class="h2cn">王国时代</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">Early Builders</span><span class="concept-cn">早期建设者</span></td>
+        <td><span class="fig-name col-w">Hammurabi</span><span class="fig-cn">汉谟拉比</span><span class="fig-desc">King of Babylon; his law code (~1754 BC) is one of humanity's earliest written legal systems.</span></td>
+        <td><span class="fig-name col-e">Tang of Shang 商汤</span><span class="fig-cn">Shāng Tāng</span><span class="fig-desc">Overthrew the tyrant Jie to found the Shang Dynasty, establishing the Mandate of Heaven concept.</span></td>
+        <td><span class="concept-badge">Early Kingdom Builders</span><span class="concept-cn">早期王国建设者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Founders</span><span class="concept-cn">开创者</span></td>
+        <td><span class="fig-name col-w">King David</span><span class="fig-cn">大卫王</span><span class="fig-desc">United Israel, captured Jerusalem, composed the Psalms &mdash; warrior-poet and founder of a royal line.</span></td>
+        <td><span class="fig-name col-e">King Wen of Zhou 周文王</span><span class="fig-cn">Zhōu Wénwáng</span><span class="fig-desc">Laid the groundwork for the Zhou Dynasty; credited with developing the I Ching (Book of Changes).</span></td>
+        <td><span class="concept-badge">Dynasty Founders</span><span class="concept-cn">王朝开创者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Successors</span><span class="concept-cn">继业者</span></td>
+        <td><span class="fig-name col-w">Solomon</span><span class="fig-cn">所罗门</span><span class="fig-desc">Renowned for wisdom and wealth; built the First Temple in Jerusalem, Israel's golden age.</span></td>
+        <td><span class="fig-name col-e">King Wu of Zhou 周武王</span><span class="fig-cn">Zhōu Wǔwáng</span><span class="fig-desc">Completed his father's work by defeating the Shang at the Battle of Muye, founding the Zhou.</span></td>
+        <td><span class="concept-badge">Completing the Vision</span><span class="concept-cn">完成愿景</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Revival</span><span class="concept-cn">中兴</span></td>
+        <td><span class="fig-name col-w">Cyrus the Great</span><span class="fig-cn">居鲁士大帝</span><span class="fig-desc">Founded the Achaemenid Empire; freed the Jews from Babylon; authored the first declaration of human rights.</span></td>
+        <td><span class="fig-name col-e">Duke Wen of Jin 晋文公</span><span class="fig-cn">Jìn Wéngōng</span><span class="fig-desc">Rose from 19 years of exile to become one of the Five Hegemons of the Spring and Autumn period.</span></td>
+        <td><span class="concept-badge">Restoration &amp; Revival</span><span class="concept-cn">复兴中兴</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 3: AXIAL AGE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>III<span></span></div>
+<div class="era rv" id="era-axial" data-nav="Axial">
+  <div class="era-label">Era III &mdash; ~800 BC &ndash; 200 BC</div>
+  <h2>The Axial Age</h2>
+  <div class="h2cn">轴心时代</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">Poets</span><span class="concept-cn">诗人</span></td>
+        <td><span class="fig-name col-w">Homer</span><span class="fig-cn">荷马</span><span class="fig-desc">Author of the Iliad and Odyssey &mdash; the foundational epics of Western literature.</span></td>
+        <td><span class="fig-name col-e">Qu Yuan 屈原</span><span class="fig-cn">Qū Yuán</span><span class="fig-desc">China's first named poet; his Li Sao is the founding work of Chinese lyric poetry. Commemorated by the Dragon Boat Festival.</span></td>
+        <td><span class="concept-badge">Founding Poets</span><span class="concept-cn">诗歌奠基者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Philosophy</span><span class="concept-cn">哲学开创</span></td>
+        <td><span class="fig-name col-w">Socrates</span><span class="fig-cn">苏格拉底</span><span class="fig-desc">"The unexamined life is not worth living." Father of Western philosophy through dialectic questioning.</span></td>
+        <td><span class="fig-name col-e">Laozi 老子</span><span class="fig-cn">Lǎozǐ</span><span class="fig-desc">Author of the Tao Te Ching; founder of Taoism. "The Tao that can be spoken is not the eternal Tao."</span></td>
+        <td><span class="concept-badge">Founders of Philosophy</span><span class="concept-cn">哲学创始人</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Educators</span><span class="concept-cn">教育家</span></td>
+        <td><span class="fig-name col-w">Plato</span><span class="fig-cn">柏拉图</span><span class="fig-desc">Founded the Academy; developed the Theory of Forms; wrote the Republic &mdash; shaping Western thought for 2,400 years.</span></td>
+        <td><span class="fig-name col-e">Confucius 孔子</span><span class="fig-cn">Kǒngzǐ</span><span class="fig-desc">"When three walk together, one can be my teacher." Defined Chinese ethics, education, and governance for millennia.</span></td>
+        <td><span class="concept-badge">The Great Educators</span><span class="concept-cn">伟大的教育家</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Historiography</span><span class="concept-cn">史书</span></td>
+        <td><span class="fig-name col-w">Herodotus</span><span class="fig-cn">希罗多德</span><span class="fig-desc">"Father of History"; his Histories recorded the Greco-Persian Wars and the cultures of the ancient world.</span></td>
+        <td><span class="fig-name col-e">Spring &amp; Autumn Annals 春秋</span><span class="fig-cn">Chūnqiū</span><span class="fig-desc">Chronicle attributed to Confucius; the first Chinese historical narrative, covering 722&ndash;481 BC.</span></td>
+        <td><span class="concept-badge">Recording History</span><span class="concept-cn">记录历史</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Imperial Teachers</span><span class="concept-cn">帝师</span></td>
+        <td><span class="fig-name col-w">Aristotle</span><span class="fig-cn">亚里士多德</span><span class="fig-desc">Tutor to Alexander the Great; systematized logic, biology, politics, and ethics &mdash; the encyclopedic mind.</span></td>
+        <td><span class="fig-name col-e">Mencius 孟子</span><span class="fig-cn">Mèngzǐ</span><span class="fig-desc">"Human nature is inherently good." Extended Confucianism with ideas on benevolent governance and popular sovereignty.</span></td>
+        <td><span class="concept-badge">Philosopher-Advisors</span><span class="concept-cn">哲人顾问</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Reformers</span><span class="concept-cn">改革</span></td>
+        <td><span class="fig-name col-w">Solon</span><span class="fig-cn">梭伦</span><span class="fig-desc">Athenian statesman whose reforms laid the foundations of Greek democracy.</span></td>
+        <td><span class="fig-name col-e">Shang Yang 商鞅</span><span class="fig-cn">Shāng Yāng</span><span class="fig-desc">Legalist reformer of Qin; his ruthless meritocratic system transformed Qin into a superpower.</span></td>
+        <td><span class="concept-badge">Political Reformers</span><span class="concept-cn">政治改革者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Science &amp; Tech</span><span class="concept-cn">科技</span></td>
+        <td><span class="fig-name col-w">Archimedes</span><span class="fig-cn">阿基米德</span><span class="fig-desc">"Give me a lever long enough and I shall move the world." Mathematician, inventor, engineer of antiquity.</span></td>
+        <td><span class="fig-name col-e">Mozi 墨子</span><span class="fig-cn">Mòzǐ</span><span class="fig-desc">Philosopher-engineer who championed universal love, defensive warfare, and early optical and mechanical science.</span></td>
+        <td><span class="concept-badge">Science &amp; Technology</span><span class="concept-cn">科学与技术</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Conquerors</span><span class="concept-cn">征服者</span></td>
+        <td><span class="fig-name col-w">Alexander the Great</span><span class="fig-cn">亚历山大大帝</span><span class="fig-desc">Conquered from Greece to India by age 30; spread Hellenistic culture across the known world.</span></td>
+        <td><span class="fig-name col-e">Qin Shi Huang 秦始皇</span><span class="fig-cn">Qín Shǐhuáng</span><span class="fig-desc">Unified China; standardized writing, currency, and measures; built the Great Wall and the Terracotta Army.</span></td>
+        <td><span class="concept-badge">World Conquerors</span><span class="concept-cn">天下征服者</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 4: FIRST EMPIRE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>IV<span></span></div>
+<div class="era rv" id="era-empire1" data-nav="1st Empire">
+  <div class="era-label">Era IV &mdash; ~200 BC &ndash; 400 AD</div>
+  <h2>The First Empire</h2>
+  <div class="h2cn">第一帝国初创 &mdash; 罗马帝国与汉帝国</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">Empire Founders</span><span class="concept-cn">帝国初创</span></td>
+        <td><span class="fig-name col-w">Julius Caesar</span><span class="fig-cn">尤利乌斯·凯撒</span><span class="fig-desc">Crossed the Rubicon; transformed the Roman Republic into an empire. Assassinated on the Ides of March.</span></td>
+        <td><span class="fig-name col-e">Liu Bang 刘邦</span><span class="fig-cn">Liú Bāng</span><span class="fig-desc">A peasant who became Emperor Gaozu of Han, founding the dynasty that gave its name to the Chinese people (汉族).</span></td>
+        <td><span class="concept-badge">Founding the Empire</span><span class="concept-cn">开创帝国</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Rivals</span><span class="concept-cn">宿敌</span></td>
+        <td><span class="fig-name col-w">Hannibal</span><span class="fig-cn">汉尼拔</span><span class="fig-desc">Carthage's greatest general; crossed the Alps with elephants to threaten Rome itself.</span></td>
+        <td><span class="fig-name col-e">Xiang Yu 项羽</span><span class="fig-cn">Xiàng Yǔ</span><span class="fig-desc">Aristocratic warrior-king of Chu; Liu Bang's great rival. Won every battle but lost the war. A tragic hero.</span></td>
+        <td><span class="concept-badge">Carthage &amp; Chu</span><span class="concept-cn">迦太基与楚国</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Foundation</span><span class="concept-cn">奠基</span></td>
+        <td><span class="fig-name col-w">Augustus</span><span class="fig-cn">奥古斯都</span><span class="fig-desc">First Roman Emperor; the Pax Romana he established lasted two centuries of unprecedented peace.</span></td>
+        <td><span class="fig-name col-e">Emperor Wu of Han 汉武帝</span><span class="fig-cn">Hàn Wǔdì</span><span class="fig-desc">Expanded the Han Empire to its greatest extent; opened the Silk Road; made Confucianism the state ideology.</span></td>
+        <td><span class="concept-badge">Foundational Rulers</span><span class="concept-cn">帝国奠基者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Historians</span><span class="concept-cn">史学家</span></td>
+        <td><span class="fig-name col-w">Plutarch</span><span class="fig-cn">普鲁塔克</span><span class="fig-desc">Parallel Lives compared Greek and Roman heroes &mdash; the original civilizational comparison project.</span></td>
+        <td><span class="fig-name col-e">Sima Qian 司马迁</span><span class="fig-cn">Sīmǎ Qiān</span><span class="fig-desc">"Grand Historian"; his Records of the Grand Historian set the model for all subsequent Chinese historiography.</span></td>
+        <td><span class="concept-badge">The Great Historians</span><span class="concept-cn">伟大的史学家</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Alternative Thought</span><span class="concept-cn">另类思想</span></td>
+        <td><span class="fig-name col-w">Jesus</span><span class="fig-cn">耶稣</span><span class="fig-desc">Founded Christianity &mdash; a radical challenge to Roman power that became the West's defining religion.</span></td>
+        <td><span class="fig-name col-e">Wang Mang 王莽</span><span class="fig-cn">Wáng Mǎng</span><span class="fig-desc">Usurped the Han throne; attempted radical socialist-like reforms &mdash; land redistribution, price controls. Often called "China's first socialist."</span></td>
+        <td><span class="concept-badge">Radical Alternatives</span><span class="concept-cn">激进的另类</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Emperors</span><span class="concept-cn">皇帝</span></td>
+        <td><span class="fig-name col-w">Hadrian</span><span class="fig-cn">哈德良</span><span class="fig-desc">Built Hadrian's Wall; consolidated Rome's borders; a philosopher-emperor and patron of the arts.</span></td>
+        <td><span class="fig-name col-e">Liu Xiu 刘秀</span><span class="fig-cn">Liú Xiù</span><span class="fig-desc">Emperor Guangwu; restored the Han Dynasty (Eastern Han) after Wang Mang's interregnum &mdash; the "most perfect emperor."</span></td>
+        <td><span class="concept-badge">Empire Restorers</span><span class="concept-cn">帝国复兴者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Historians II</span><span class="concept-cn">史书</span></td>
+        <td><span class="fig-name col-w">Tacitus</span><span class="fig-cn">塔西佗</span><span class="fig-desc">Rome's greatest historian; sharp, cynical accounts of imperial corruption in the Annals and Histories.</span></td>
+        <td><span class="fig-name col-e">Ban Gu 班固</span><span class="fig-cn">Bān Gù</span><span class="fig-desc">Compiled the Book of Han &mdash; the first dynastic history, establishing the template for the Twenty-Four Histories.</span></td>
+        <td><span class="concept-badge">Chroniclers</span><span class="concept-cn">编年史家</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Outstanding Rulers</span><span class="concept-cn">杰出皇帝</span></td>
+        <td><span class="fig-name col-w">Trajan</span><span class="fig-cn">图拉真</span><span class="fig-desc">Expanded Rome to its maximum extent; the "best emperor" (Optimus Princeps) by Roman consensus.</span></td>
+        <td><span class="fig-name col-e">Liu Bei 刘备</span><span class="fig-cn">Liú Bèi</span><span class="fig-desc">Founded Shu Han during the Three Kingdoms; embodied Confucian virtue and loyalty in the Romance of the Three Kingdoms.</span></td>
+        <td><span class="concept-badge">Exemplary Rulers</span><span class="concept-cn">典范统治者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Division</span><span class="concept-cn">帝国分裂</span></td>
+        <td><span class="fig-name col-w">Diocletian</span><span class="fig-cn">戴克里先</span><span class="fig-desc">Split the Roman Empire into East and West with the Tetrarchy &mdash; an attempt to save it that foreshadowed its fall.</span></td>
+        <td><span class="fig-name col-e">Cao Cao 曹操</span><span class="fig-cn">Cáo Cāo</span><span class="fig-desc">Warlord who unified northern China; a brilliant strategist and poet &mdash; the man who split the Han into Three Kingdoms.</span></td>
+        <td><span class="concept-badge">Imperial Division</span><span class="concept-cn">帝国分裂</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 5: SECOND EMPIRE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>V<span></span></div>
+<div class="era rv" id="era-empire2" data-nav="2nd Empire">
+  <div class="era-label">Era V &mdash; ~400 &ndash; 1200 AD</div>
+  <h2>Revival of the Second Empire</h2>
+  <div class="h2cn">第二帝国中兴 &mdash; 法兰克帝国/神圣罗马帝国与唐宋</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">Cultural Fusion</span><span class="concept-cn">文化融合</span></td>
+        <td><span class="fig-name col-w">Clovis I</span><span class="fig-cn">克洛维一世</span><span class="fig-desc">First King of the Franks to unite all tribes; converted to Christianity &mdash; Romanizing the Germanic peoples.</span></td>
+        <td><span class="fig-name col-e">Emperor Xiaowen 北魏孝文帝</span><span class="fig-cn">Tuòbá Hóng</span><span class="fig-desc">Moved the Northern Wei capital to Luoyang; mandated Chinese language, dress, and surnames &mdash; Sinicizing the Xianbei.</span></td>
+        <td><span class="concept-badge">Romanization &amp; Sinicization</span><span class="concept-cn">罗马化与汉化</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Civilization Revival</span><span class="concept-cn">复兴</span></td>
+        <td><span class="fig-name col-w">Justinian I</span><span class="fig-cn">查士丁尼一世</span><span class="fig-desc">Last Roman Emperor to reclaim the West; codified Roman law (Corpus Juris Civilis) &mdash; the basis of European law.</span></td>
+        <td><span class="fig-name col-e">Emperor Wen of Sui 隋文帝</span><span class="fig-cn">Suí Wéndì</span><span class="fig-desc">Reunified China after 300 years of division; created the imperial examination system and the Grand Canal.</span></td>
+        <td><span class="concept-badge">Restoring Civilization</span><span class="concept-cn">文明复兴</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Empire Revival</span><span class="concept-cn">帝国复兴</span></td>
+        <td><span class="fig-name col-w">Charlemagne</span><span class="fig-cn">查理曼大帝</span><span class="fig-desc">Crowned Emperor of the Romans (800 AD); united Western Europe; sparked the Carolingian Renaissance.</span></td>
+        <td><span class="fig-name col-e">Li Shimin 李世民</span><span class="fig-cn">Táng Tàizōng</span><span class="fig-desc">Emperor Taizong of Tang; his reign is China's golden age &mdash; open, cosmopolitan, and culturally radiant.</span></td>
+        <td><span class="concept-badge">Second Empire Zenith</span><span class="concept-cn">第二帝国鼎盛</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Literature</span><span class="concept-cn">文艺</span></td>
+        <td><span class="fig-name col-w">Beowulf</span><span class="fig-cn">贝奥武夫</span><span class="fig-desc">The founding epic of English literature &mdash; a hero battles monsters in a world where valor is the highest virtue.</span></td>
+        <td><span class="fig-name col-e">Li Bai 李白</span><span class="fig-cn">Lǐ Bái</span><span class="fig-desc">"Immortal Poet"; his verses on wine, moonlight, and freedom are the soul of Tang Dynasty poetry.</span></td>
+        <td><span class="concept-badge">Medieval Literature</span><span class="concept-cn">中世纪文艺</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Synthesis</span><span class="concept-cn">融合</span></td>
+        <td><span class="fig-name col-w">Thomas Aquinas</span><span class="fig-cn">托马斯·阿奎那</span><span class="fig-desc">Synthesized Aristotelian philosophy with Christian theology &mdash; the intellectual backbone of medieval Europe.</span></td>
+        <td><span class="fig-name col-e">Zhu Xi 朱熹</span><span class="fig-cn">Zhū Xī</span><span class="fig-desc">Synthesized Confucianism with Buddhist and Taoist ideas into Neo-Confucianism &mdash; China's dominant philosophy for 700 years.</span></td>
+        <td><span class="concept-badge">Philosophical Synthesis</span><span class="concept-cn">哲学融合</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">New Empires</span><span class="concept-cn">新帝国</span></td>
+        <td><span class="fig-name col-w">Otto I</span><span class="fig-cn">奥托一世</span><span class="fig-desc">Founded the Holy Roman Empire (962 AD); revived the imperial idea in Central Europe.</span></td>
+        <td><span class="fig-name col-e">Zhao Kuangyin 赵匡胤</span><span class="fig-cn">Sòng Tàizǔ</span><span class="fig-desc">Founded the Song Dynasty (960 AD) through a bloodless coup; ushered in an era of cultural and economic brilliance.</span></td>
+        <td><span class="concept-badge">Song &amp; Holy Roman Empire</span><span class="concept-cn">宋朝与神圣罗马帝国</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Monarchs</span><span class="concept-cn">君主</span></td>
+        <td><span class="fig-name col-w">Alfred the Great</span><span class="fig-cn">阿尔弗雷德大帝</span><span class="fig-desc">Defended England against the Vikings; promoted literacy and law &mdash; the only English king called "the Great."</span></td>
+        <td><span class="fig-name col-e">Yelü Abaoji 耶律阿保机</span><span class="fig-cn">Yēlǜ Ābǎojī</span><span class="fig-desc">Founded the Liao Dynasty; united the Khitan tribes into a dual-administration empire spanning steppe and farmland.</span></td>
+        <td><span class="concept-badge">England &amp; Liao</span><span class="concept-cn">英国与辽国</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Reformers</span><span class="concept-cn">改革者</span></td>
+        <td><span class="fig-name col-w">Pope Urban II</span><span class="fig-cn">教皇乌尔班二世</span><span class="fig-desc">Launched the First Crusade (1095); transformed the papacy into a geopolitical power.</span></td>
+        <td><span class="fig-name col-e">Wang Anshi 王安石</span><span class="fig-cn">Wáng Ānshí</span><span class="fig-desc">Song Dynasty reformer; his "New Policies" attempted sweeping economic and military modernization.</span></td>
+        <td><span class="concept-badge">Bold Reformers</span><span class="concept-cn">大胆的改革者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Conquerors</span><span class="concept-cn">征服者</span></td>
+        <td><span class="fig-name col-w">William the Conqueror</span><span class="fig-cn">征服者威廉</span><span class="fig-desc">Norman duke who conquered England (1066); remade its language, law, and aristocracy.</span></td>
+        <td><span class="fig-name col-e">Wanyan Aguda 完颜阿骨打</span><span class="fig-cn">Wányán Āgǔdǎ</span><span class="fig-desc">Founded the Jin Dynasty; crushed the Liao and conquered northern China from the Song.</span></td>
+        <td><span class="concept-badge">Military Conquerors</span><span class="concept-cn">军事征服者</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 6: THIRD EMPIRE / RENAISSANCE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>VI<span></span></div>
+<div class="era rv" id="era-empire3" data-nav="3rd Empire">
+  <div class="era-label">Era VI &mdash; ~1200 &ndash; 1700 AD</div>
+  <h2>Renaissance of the Third Empire</h2>
+  <div class="h2cn">第三帝国文艺复兴 &mdash; 哈布斯堡神圣罗马帝国与元明清</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">Founders</span><span class="concept-cn">开创者</span></td>
+        <td><span class="fig-name col-w">Rudolf I</span><span class="fig-cn">鲁道夫一世</span><span class="fig-desc">First Habsburg emperor (1273); founded the dynasty that would dominate Europe for 600 years.</span></td>
+        <td><span class="fig-name col-e">Kublai Khan 忽必烈</span><span class="fig-cn">Hūbìliè</span><span class="fig-desc">Grandson of Genghis; founded the Yuan Dynasty, uniting China under Mongol rule. Hosted Marco Polo.</span></td>
+        <td><span class="concept-badge">Third Empire Founders</span><span class="concept-cn">第三帝国开创者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Dynasties</span><span class="concept-cn">王朝</span></td>
+        <td><span class="fig-name col-w">Habsburg Dynasty</span><span class="fig-cn">哈布斯堡王朝</span><span class="fig-desc">Ruled through marriage and diplomacy ("Let others wage war; you, happy Austria, marry") across six centuries.</span></td>
+        <td><span class="fig-name col-e">Ming Dynasty 明朝</span><span class="fig-cn">Zhū Míng</span><span class="fig-desc">The Zhu family restored Han Chinese rule; the Forbidden City, porcelain, and Zheng He's voyages define the era.</span></td>
+        <td><span class="concept-badge">Imperial Dynasties</span><span class="concept-cn">帝国王朝</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Literature</span><span class="concept-cn">文学</span></td>
+        <td><span class="fig-name col-w">Dante</span><span class="fig-cn">但丁</span><span class="fig-desc">The Divine Comedy mapped Heaven, Hell, and Purgatory &mdash; and birthed the Italian language as a literary medium.</span></td>
+        <td><span class="fig-name col-e">Guan Hanqing 关汉卿</span><span class="fig-cn">Guān Hànqīng</span><span class="fig-desc">"Father of Chinese drama"; his zaju plays gave voice to common people under Mongol rule.</span></td>
+        <td><span class="concept-badge">Early Renaissance Lit</span><span class="concept-cn">文艺复兴初创文学</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Visual Art</span><span class="concept-cn">视觉艺术</span></td>
+        <td><span class="fig-name col-w">Leonardo da Vinci</span><span class="fig-cn">达芬奇</span><span class="fig-desc">The archetypal Renaissance man: painter, engineer, anatomist, inventor. The Mona Lisa. The Vitruvian Man.</span></td>
+        <td><span class="fig-name col-e">Tang Bohu 唐伯虎</span><span class="fig-cn">Táng Bóhǔ</span><span class="fig-desc">Ming Dynasty painter, poet, and calligrapher. One of the "Four Masters of Ming"; a genius celebrated in folklore.</span></td>
+        <td><span class="concept-badge">Artist-Geniuses</span><span class="concept-cn">艺术天才</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Navigators</span><span class="concept-cn">航海家</span></td>
+        <td><span class="fig-name col-w">Christopher Columbus</span><span class="fig-cn">哥伦布</span><span class="fig-desc">Reached the Americas (1492); opened the Age of Exploration and irreversibly connected the hemispheres.</span></td>
+        <td><span class="fig-name col-e">Zheng He 郑和</span><span class="fig-cn">Zhèng Hé</span><span class="fig-desc">Led seven massive voyages (1405&ndash;1433) across Southeast Asia, India, Arabia, and East Africa with fleets dwarfing Columbus's.</span></td>
+        <td><span class="concept-badge">Great Navigators</span><span class="concept-cn">伟大航海家</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Playwrights</span><span class="concept-cn">戏剧家</span></td>
+        <td><span class="fig-name col-w">William Shakespeare</span><span class="fig-cn">莎士比亚</span><span class="fig-desc">"To be, or not to be." The Bard of Avon &mdash; the most performed playwright in history.</span></td>
+        <td><span class="fig-name col-e">Tang Xianzu 汤显祖</span><span class="fig-cn">Tāng Xiǎnzǔ</span><span class="fig-desc">"The Shakespeare of China." His Peony Pavilion is a masterpiece of romantic kunqu opera &mdash; both died in 1616.</span></td>
+        <td><span class="concept-badge">The Stage Masters</span><span class="concept-cn">舞台大师</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Reformation</span><span class="concept-cn">改革</span></td>
+        <td><span class="fig-name col-w">Martin Luther</span><span class="fig-cn">马丁·路德</span><span class="fig-desc">His 95 Theses (1517) split Christianity; the Protestant Reformation reshaped European politics and thought.</span></td>
+        <td><span class="fig-name col-e">Wang Yangming 王阳明</span><span class="fig-cn">Wáng Yángmíng</span><span class="fig-desc">"Unity of knowledge and action." His idealist Confucianism liberated the individual conscience &mdash; a humanist revolution.</span></td>
+        <td><span class="concept-badge">Reformation &amp; Humanism</span><span class="concept-cn">宗教改革与人文主义</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Science</span><span class="concept-cn">科学</span></td>
+        <td><span class="fig-name col-w">Galileo Galilei</span><span class="fig-cn">伽利略</span><span class="fig-desc">"And yet it moves." Pioneered telescopic astronomy, experimental physics, and the scientific method itself.</span></td>
+        <td><span class="fig-name col-e">Xu Guangqi 徐光启</span><span class="fig-cn">Xú Guāngqǐ</span><span class="fig-desc">Translated Euclid's Elements into Chinese with Matteo Ricci; modernized Chinese agriculture and calendar science.</span></td>
+        <td><span class="concept-badge">Scientific Revival</span><span class="concept-cn">科学复兴</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Democratic Thought</span><span class="concept-cn">民主思想</span></td>
+        <td><span class="fig-name col-w">Montesquieu</span><span class="fig-cn">孟德斯鸠</span><span class="fig-desc">The Spirit of Laws (1748) proposed separation of powers &mdash; the blueprint for modern constitutional government.</span></td>
+        <td><span class="fig-name col-e">Gu Yanwu 顾炎武</span><span class="fig-cn">Gù Yánwǔ</span><span class="fig-desc">"Every man bears responsibility for the fate of his nation." Pioneer of evidential scholarship and proto-nationalism.</span></td>
+        <td><span class="concept-badge">Early Democracy</span><span class="concept-cn">早期民主思想</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Humanism</span><span class="concept-cn">人文主义</span></td>
+        <td><span class="fig-name col-w">Voltaire</span><span class="fig-cn">伏尔泰</span><span class="fig-desc">"I disapprove of what you say, but I will defend to the death your right to say it." Champion of tolerance and reason.</span></td>
+        <td><span class="fig-name col-e">Huang Zongxi 黄宗羲</span><span class="fig-cn">Huáng Zōngxī</span><span class="fig-desc">"The greatest evil in the world is the monarch." His Waiting for the Dawn is China's closest text to Enlightenment political philosophy.</span></td>
+        <td><span class="concept-badge">Enlightenment Humanists</span><span class="concept-cn">启蒙人文主义者</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 7: INDUSTRIAL REVOLUTION -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>VII<span></span></div>
+<div class="era rv" id="era-industrial" data-nav="Industrial">
+  <div class="era-label">Era VII &mdash; ~1700 &ndash; 1900 AD</div>
+  <h2>The Industrial Revolution</h2>
+  <div class="h2cn">工业革命</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">Great Monarchs</span><span class="concept-cn">伟大君主</span></td>
+        <td><span class="fig-name col-w">Louis XIV</span><span class="fig-cn">路易十四 (太阳王)</span><span class="fig-desc">"L'&eacute;tat, c'est moi." The Sun King; built Versailles; absolute monarchy personified. Reigned 72 years.</span></td>
+        <td><span class="fig-name col-e">Kangxi Emperor 康熙帝</span><span class="fig-cn">Kāngxī</span><span class="fig-desc">Reigned 61 years; quelled rebellions, expanded frontiers, patronized arts and sciences. China's longest-reigning emperor.</span></td>
+        <td><span class="concept-badge">Sun Kings</span><span class="concept-cn">太阳王</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Great Monarchs II</span><span class="concept-cn">伟大君主</span></td>
+        <td><span class="fig-name col-w">George Washington</span><span class="fig-cn">华盛顿</span><span class="fig-desc">Led the American Revolution; first President; voluntarily relinquished power &mdash; unprecedented for a victorious general.</span></td>
+        <td><span class="fig-name col-e">Qianlong Emperor 乾隆帝</span><span class="fig-cn">Qiánlóng</span><span class="fig-desc">Presided over China's greatest territorial extent and cultural compilation (Siku Quanshu). But late-reign complacency sowed decline.</span></td>
+        <td><span class="concept-badge">Peak Power</span><span class="concept-cn">巅峰权力</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Royal Financiers</span><span class="concept-cn">皇室管家</span></td>
+        <td><span class="fig-name col-w">Rothschild Family</span><span class="fig-cn">罗斯柴尔德家族</span><span class="fig-desc">Built Europe's most powerful banking dynasty across five countries; financed wars and railroads.</span></td>
+        <td><span class="fig-name col-e">Heshen 和珅</span><span class="fig-cn">Héshēn</span><span class="fig-desc">Qianlong's favorite minister; amassed a personal fortune estimated at 800 million taels &mdash; perhaps history's richest official.</span></td>
+        <td><span class="concept-badge">Money &amp; Power</span><span class="concept-cn">财富与权力</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Southern Powers</span><span class="concept-cn">南方势力</span></td>
+        <td><span class="fig-name col-w">Napoleon Bonaparte</span><span class="fig-cn">拿破仑</span><span class="fig-desc">Rose from Corsican obscurity to reshape Europe; the Napoleonic Code remains the basis of civil law worldwide.</span></td>
+        <td><span class="fig-name col-e">Hong Xiuquan 洪秀全</span><span class="fig-cn">Hóng Xiùquán</span><span class="fig-desc">Led the Taiping Rebellion (1850&ndash;1864) &mdash; the deadliest civil war in history (~20M deaths), driven by a syncretic Christian vision.</span></td>
+        <td><span class="concept-badge">Revolutionary Force</span><span class="concept-cn">革命力量</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Civil War</span><span class="concept-cn">南北战争</span></td>
+        <td><span class="fig-name col-w">Abraham Lincoln</span><span class="fig-cn">林肯</span><span class="fig-desc">Preserved the Union, abolished slavery, and was assassinated for it. "Government of the people, by the people, for the people."</span></td>
+        <td><span class="fig-name col-e">Zeng Guofan 曾国藩</span><span class="fig-cn">Zēng Guófān</span><span class="fig-desc">Scholar-general who suppressed the Taiping Rebellion and launched the Self-Strengthening Movement to modernize China.</span></td>
+        <td><span class="concept-badge">Civil War Leaders</span><span class="concept-cn">内战领袖</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Statesmen</span><span class="concept-cn">帝国管家</span></td>
+        <td><span class="fig-name col-w">Otto von Bismarck</span><span class="fig-cn">俾斯麦</span><span class="fig-desc">Unified Germany through "blood and iron"; master of Realpolitik; built Europe's first welfare state.</span></td>
+        <td><span class="fig-name col-e">Li Hongzhang 李鸿章</span><span class="fig-cn">Lǐ Hóngzhāng</span><span class="fig-desc">"Bismarck of the East"; negotiated China's treaties, built its first modern navy, railways, and telegraph &mdash; yet couldn't prevent decline.</span></td>
+        <td><span class="concept-badge">Imperial Statesmen</span><span class="concept-cn">帝国管家</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Female Sovereigns</span><span class="concept-cn">女帝</span></td>
+        <td><span class="fig-name col-w">Queen Victoria</span><span class="fig-cn">维多利亚女王</span><span class="fig-desc">Reigned 63 years over the British Empire at its zenith &mdash; the Victorian era defined an age of industry and morality.</span></td>
+        <td><span class="fig-name col-e">Empress Dowager Cixi 慈禧太后</span><span class="fig-cn">Cíxǐ</span><span class="fig-desc">Ruled China from behind the curtain for 47 years; modernizer and reactionary in one &mdash; the most powerful woman in Chinese history.</span></td>
+        <td><span class="concept-badge">Women in Power</span><span class="concept-cn">女性掌权</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Reform Thinkers</span><span class="concept-cn">改革思想家</span></td>
+        <td><span class="fig-name col-w">Wei Yuan</span><span class="fig-cn">魏源</span><span class="fig-desc">"Learn the barbarians' techniques to control the barbarians." His Illustrated Treatise on the Maritime Kingdoms awakened China to the wider world.</span></td>
+        <td><span class="fig-name col-e">Fukuzawa Yukichi 福泽谕吉</span><span class="fig-cn">Fúzé Yùjí</span><span class="fig-desc">Japan's foremost Enlightenment thinker; championed Western learning and independence of spirit. His face is on the ¥10,000 note.</span></td>
+        <td><span class="concept-badge">Eastern Modernizers</span><span class="concept-cn">东方现代化思想家</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Industry</span><span class="concept-cn">工业</span></td>
+        <td><span class="fig-name col-w">John D. Rockefeller</span><span class="fig-cn">洛克菲勒</span><span class="fig-desc">Built Standard Oil into history's most powerful monopoly; the first American worth over $1 billion (in 1916 dollars).</span></td>
+        <td><span class="fig-name col-e">Zhang Zhidong 张之洞</span><span class="fig-cn">Zhāng Zhīdòng</span><span class="fig-desc">"Chinese learning as the base, Western learning for practical use." Built China's first modern steel mill and heavy industries.</span></td>
+        <td><span class="concept-badge">Industrial Titans</span><span class="concept-cn">工业巨头</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- ERA 8: CONTEMPORARY -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="era-div"><span></span>VIII<span></span></div>
+<div class="era rv" id="era-modern" data-nav="Modern">
+  <div class="era-label">Era VIII &mdash; 1900 &ndash; Present</div>
+  <h2>The Contemporary Era</h2>
+  <div class="h2cn">当代</div>
+  <table class="pairs">
+    <thead><tr><th>Concept</th><th>West 西方</th><th>China 中国</th><th>Theme</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="concept-badge">National Leaders</span><span class="concept-cn">领袖</span></td>
+        <td><span class="fig-name col-w">Franklin D. Roosevelt</span><span class="fig-cn">罗斯福</span><span class="fig-desc">Led America through the Great Depression and WWII; the New Deal and Allied victory defined the 20th century.</span></td>
+        <td><span class="fig-name col-e">Mao Zedong 毛泽东</span><span class="fig-cn">Máo Zédōng</span><span class="fig-desc">Founded the People's Republic of China (1949); transformed China through revolution, with immense triumph and tragedy.</span></td>
+        <td><span class="concept-badge">Shapers of Nations</span><span class="concept-cn">国家塑造者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Physics</span><span class="concept-cn">量子力学</span></td>
+        <td><span class="fig-name col-w">Albert Einstein</span><span class="fig-cn">爱因斯坦</span><span class="fig-desc">E=mc&sup2;. Relativity. The photoelectric effect. Rewrote the laws of the universe &mdash; twice.</span></td>
+        <td><span class="fig-name col-e">Yang Zhenning 杨振宁</span><span class="fig-cn">Yáng Zhènníng</span><span class="fig-desc">Nobel Prize (1957) for parity non-conservation; the most celebrated Chinese-born physicist, bridging East and West.</span></td>
+        <td><span class="concept-badge">Quantum Minds</span><span class="concept-cn">量子头脑</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Entrepreneurs</span><span class="concept-cn">企业家</span></td>
+        <td><span class="fig-name col-w">Steve Jobs</span><span class="fig-cn">乔布斯</span><span class="fig-desc">"Stay hungry, stay foolish." Reinvented personal computing, music, phones, and tablets. Design as a way of thinking.</span></td>
+        <td><span class="fig-name col-e">Ren Zhengfei 任正非</span><span class="fig-cn">Rèn Zhèngfēi</span><span class="fig-desc">Founded Huawei from nothing; built it into the world's largest telecom equipment maker despite immense geopolitical pressure.</span></td>
+        <td><span class="concept-badge">Tech Visionaries</span><span class="concept-cn">科技远见者</span></td>
+      </tr>
+      <tr>
+        <td><span class="concept-badge">Fiction</span><span class="concept-cn">小说</span></td>
+        <td><span class="fig-name col-w">J.K. Rowling</span><span class="fig-cn">J.K.罗琳</span><span class="fig-desc">Created Harry Potter &mdash; a wizarding world that enchanted a generation and became a $25B franchise.</span></td>
+        <td><span class="fig-name col-e">Jin Yong 金庸</span><span class="fig-cn">Jīn Yōng</span><span class="fig-desc">The master of wuxia; his martial arts novels (The Condor Heroes, etc.) are read by 300M+ Chinese speakers worldwide.</span></td>
+        <td><span class="concept-badge">Popular Fiction</span><span class="concept-cn">通俗文学大师</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="hero-orn" style="justify-content:center;margin-bottom:16px;"><span style="width:30px;height:1px;background:var(--faint);display:block;"></span>&loz;<span style="width:30px;height:1px;background:var(--faint);display:block;"></span></div>
+  <p style="font-size:.9rem;color:var(--ink2);max-width:520px;margin:0 auto;">
+    History is a mirror held between civilizations. In each reflection, we find not difference alone, but the shared human impulse to create, to lead, to understand, and to endure.
+  </p>
+  <p class="cn" style="font-size:.82rem;color:var(--dim);max-width:520px;margin:12px auto 0;">
+    历史是文明之间的一面镜子。在每一个倒影中，我们发现的不仅是差异，更是人类共同的创造、领导、理解和坚持的冲动。
+  </p>
+  <p style="margin-top:20px;opacity:.4;font-size:.72rem;">Civilizations Compared &copy; 2026</p>
+</footer>
+
+<script>
+// ─ Reveal on scroll ─
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.06});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// ─ Active nav era ─
+const navEras=document.querySelectorAll('.nav-era');
+const eras=document.querySelectorAll('.era[data-nav]');
+const navObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const n=e.target.dataset.nav;
+      navEras.forEach(a=>{
+        a.classList.toggle('active',a.textContent.trim()===n||a.getAttribute('href')==='#'+e.target.id);
+      });
+    }
+  });
+},{threshold:.15,rootMargin:'-48px 0px -40% 0px'});
+eras.forEach(s=>navObs.observe(s));
+</script>
+</body>
+</html>
